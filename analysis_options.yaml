@@ -1,0 +1,59 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Style
+    - always_declare_return_types
+    - avoid_print
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - prefer_final_fields
+    - prefer_final_locals
+    - sort_child_properties_last
+    - use_key_in_widget_constructors
+    - use_super_parameters
+
+    # Null safety
+    - avoid_init_to_null
+    # unnecessary_null_comparison dihapus: tidak dikenali analyzer Dart 3.12+
+    - null_check_on_nullable_type_parameter
+
+    # Code quality
+    - avoid_empty_else
+    - avoid_redundant_argument_values
+    - avoid_unnecessary_containers
+    - avoid_void_async
+    - cancel_subscriptions
+    - close_sinks
+    - comment_references
+    - no_duplicate_case_values
+    - no_leading_underscores_for_local_identifiers
+    - prefer_expression_function_bodies
+    - prefer_is_empty
+    - prefer_is_not_empty
+    - prefer_single_quotes
+    - recursive_getters
+    - sized_box_for_whitespace
+    - sort_constructors_first
+    - type_init_formals
+    - unnecessary_brace_in_string_interps
+    - unnecessary_getters_setters
+    - unnecessary_late
+    - unnecessary_lambdas
+    - unnecessary_null_aware_assignments
+    - unrelated_type_equality_checks
+
+    # Disabled rules
+    # - public_member_api_docs (too verbose for now)
+    # - library_private_types_in_public_api (sometimes needed)
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+  errors:
+    invalid_annotation_target: ignore
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true

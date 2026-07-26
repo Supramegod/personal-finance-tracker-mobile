@@ -1,0 +1,47 @@
+name: personal_finance_tracker
+description: Aplikasi pencatatan keuangan pribadi — Personal Finance Tracker.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.2
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Navigation
+  go_router: ^14.2.0
+
+  # Network
+  dio: ^5.4.3+1
+
+  # Secure Storage (token)
+  flutter_secure_storage: ^9.2.2
+
+  # Charting
+  fl_chart: ^0.68.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.9
+  riverpod_generator: ^2.4.0
+
+flutter:
+  uses-material-design: true
+
+  # Assets (akan ditambahkan nanti)
+  # assets:
+  #   - assets/images/
+  #   - assets/icons/
