@@ -42,6 +42,7 @@ class SummaryRepository {
         totalExpense: num2d(reportData['total_expense']),
       );
     } on DioException catch (e) {
+      print('error $e');
       throw ApiException.fromDio(e);
     }
   }

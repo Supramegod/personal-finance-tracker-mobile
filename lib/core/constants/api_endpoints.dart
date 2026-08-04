@@ -13,7 +13,7 @@ library;
 abstract final class ApiEndpoints {
   // ── Base URL ─────────────────────────────────────────────────────
   static const String baseUrl = String.fromEnvironment(
-    'API_BASE_URL',
+    'https://jalu-finance.shelterdev.online',
     defaultValue: 'https://jalu-finance.shelterdev.online',
   );
   static const String apiPrefix = '/api/v1';
