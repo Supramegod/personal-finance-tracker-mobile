@@ -30,11 +30,25 @@ abstract final class ApiEndpoints {
 
   // ── Groups ───────────────────────────────────────────────────────
   static const String groups = '/groups'; // GET / POST
+  static String groupMembers(String id) => '/groups/$id/members'; // GET / POST
+  static String groupMember(String groupId, String userId) =>
+      '/groups/$groupId/members/$userId'; // DELETE
+  static String groupAIConsent(String id) => '/groups/$id/ai-consent';
+
+  // ── Users ────────────────────────────────────────────────────────
+  static const String users = '/users'; // GET / POST
 
   // ── Transactions ─────────────────────────────────────────────────
   static const String transactions = '/transactions'; // GET / POST
-  static String transaction(String id) => '/transactions/$id'; // GET / PUT / DELETE
-  static const String calendar = '/transactions/calendar'; // GET (?year=&month=)
+  static String transaction(String id) =>
+      '/transactions/$id'; // GET / PUT / DELETE
+  static const String calendar =
+      '/transactions/calendar'; // GET (?year=&month=)
+
+  // ── Installments ─────────────────────────────────────────────────
+  static const String installments = '/installments'; // GET / POST
+  static String installment(String id) => '/installments/$id'; // DELETE
+  static String installmentPay(String id) => '/installments/$id/pay'; // POST
 
   // ── Categories ───────────────────────────────────────────────────
   static const String categories = '/categories'; // GET
@@ -42,4 +56,6 @@ abstract final class ApiEndpoints {
   // ── Summary ──────────────────────────────────────────────────────
   static const String balance = '/summary/balance'; // GET
   static const String report = '/summary/report'; // GET (?period=&from=&to=)
+  static const String aiInsights = '/summary/ai-insights';
+  static const String latestAIInsight = '/summary/ai-insights/latest';
 }

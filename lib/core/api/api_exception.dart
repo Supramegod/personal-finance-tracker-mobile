@@ -33,10 +33,18 @@ class ApiException implements Exception {
         return ApiException('Tidak dapat terhubung ke server.');
       case DioExceptionType.badResponse:
         final code = e.response?.statusCode;
-        if (code == 401) return ApiException('Sesi berakhir. Silakan login lagi.', statusCode: 401);
+        if (code == 401)
+          return ApiException(
+            'Sesi berakhir. Silakan login lagi.',
+            statusCode: 401,
+          );
         if (code == 403) return ApiException('Akses ditolak.', statusCode: 403);
-        if (code == 404) return ApiException('Data tidak ditemukan.', statusCode: 404);
-        return ApiException('Terjadi kesalahan server ($code).', statusCode: code);
+        if (code == 404)
+          return ApiException('Data tidak ditemukan.', statusCode: 404);
+        return ApiException(
+          'Terjadi kesalahan server ($code).',
+          statusCode: code,
+        );
       default:
         return ApiException('Terjadi kesalahan. Coba lagi.');
     }

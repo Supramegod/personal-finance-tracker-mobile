@@ -93,8 +93,7 @@ final dioProvider = Provider<Dio>((ref) {
       },
       onError: (e, handler) async {
         final res = e.response;
-        final isAuthEndpoint =
-            e.requestOptions.path.contains('/auth/');
+        final isAuthEndpoint = e.requestOptions.path.contains('/auth/');
         // Coba refresh sekali untuk 401 di endpoint non-auth.
         if (res?.statusCode == 401 &&
             !isAuthEndpoint &&

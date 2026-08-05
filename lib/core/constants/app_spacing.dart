@@ -21,8 +21,8 @@ abstract final class AppSpacing {
 
   // ── Card ─────────────────────────────────────────────────────────
   static const double cardPadding = lg;
-  static const double cardRadius = 12.0;
-  static const double cardElevation = 1.0;
+  static const double cardRadius = 16.0;
+  static const double cardElevation = 0.0;
 
   // ── List Tile ────────────────────────────────────────────────────
   static const double tileHorizontalPadding = lg;
@@ -30,7 +30,7 @@ abstract final class AppSpacing {
 
   // ── Button ───────────────────────────────────────────────────────
   static const double buttonHeight = 48.0;
-  static const double buttonRadius = 8.0;
+  static const double buttonRadius = 12.0;
 
   // ── Input ────────────────────────────────────────────────────────
   static const double inputRadius = 8.0;

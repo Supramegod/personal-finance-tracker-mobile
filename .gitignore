@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Local SDK paths — machine-specific, never commit.
+/local.properties
+/android/local.properties
+/android/app/local.properties
