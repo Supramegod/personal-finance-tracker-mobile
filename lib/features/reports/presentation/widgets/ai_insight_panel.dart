@@ -203,7 +203,12 @@ class _InsightContent extends StatelessWidget {
   final bool compact;
   @override
   Widget build(BuildContext context) {
-    if (!insight.isCompleted)
+    // Syaratnya keberadaan analisis, BUKAN statusnya. Selama masih ada hasil
+    // tersimpan, tampilkan — walau status 'processing' (sedang diregenerasi
+    // karena transaksi bulan itu diedit) atau 'failed'. Menyaring berdasarkan
+    // status menyembunyikan analisis lama yang masih valid, dan bila
+    // regenerasi gagal permanen hasil itu hilang dari mata pengguna selamanya.
+    if (insight.analysis == null) {
       return _MessageCard(
         icon: Icons.schedule_rounded,
         title: _statusTitle(insight.status),
@@ -211,6 +216,7 @@ class _InsightContent extends StatelessWidget {
             ? 'AI gagal memproses bulan ini dan akan dicoba kembali secara otomatis.'
             : 'Analisis dibuat setelah bulan berakhir.',
       );
+    }
     final analysis = insight.analysis!;
     final color = _healthColor(analysis.healthStatus);
     return Card(
@@ -243,7 +249,14 @@ class _InsightContent extends StatelessWidget {
                               ?.copyWith(fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          insight.period ?? '',
+                          // Tandai bahwa isi di bawah adalah hasil lama yang
+                          // sedang diperbarui atau gagal diperbarui, supaya
+                          // tidak terbaca sebagai analisis terkini.
+                          insight.status == 'processing'
+                              ? '${insight.period ?? ''} · sedang diperbarui'
+                              : insight.status == 'failed'
+                              ? '${insight.period ?? ''} · pembaruan gagal'
+                              : insight.period ?? '',
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ],

@@ -156,12 +156,30 @@ class TransactionListNotifier extends StateNotifier<TransactionListState> {
     await load();
   }
 
-  /// Hapus transaksi (soft delete di server) lalu buang dari list lokal.
+  /// Hapus transaksi (soft delete di server), buang dari list lokal lebih
+  /// dulu, dan kembalikan bila permintaan gagal.
+  ///
+  /// Urutannya penting. Pemanggilnya adalah `onDismissed` milik Dismissible,
+  /// yang berjalan SETELAH Flutter melipat barisnya. Kalau item baru dibuang
+  /// setelah await berhasil, kegagalan jaringan meninggalkan item itu di
+  /// dalam state; rebuild berikutnya (tarik-segarkan, loadMore, ganti filter)
+  /// merender ulang Dismissible dengan ValueKey yang sama dan Flutter
+  /// melempar "A dismissed Dismissible widget is still part of the tree".
+  ///
+  /// Menghapus lebih dulu membuat pohon widget selalu konsisten dengan apa
+  /// yang sudah dilipat di layar. Error tetap dilempar ulang supaya pemanggil
+  /// bisa menampilkan pesan, sementara daftarnya sendiri sudah dipulihkan.
   Future<void> delete(String id) async {
-    await _repo.delete(id);
+    final previousItems = state.items;
     state = state.copyWith(
-      items: state.items.where((t) => t.id != id).toList(),
+      items: previousItems.where((t) => t.id != id).toList(),
     );
+    try {
+      await _repo.delete(id);
+    } catch (_) {
+      state = state.copyWith(items: previousItems);
+      rethrow;
+    }
   }
 }
 

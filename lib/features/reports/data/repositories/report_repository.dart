@@ -23,7 +23,10 @@ class ReportRepository implements ReportRepositoryContract {
         ApiEndpoints.report,
         queryParameters: {'period': period, 'from': ymd(from), 'to': ymd(to)},
       );
-      return response.data as Map<String, dynamic>;
+      // `as` pada body kosong/null melempar TypeError, yang BUKAN DioException
+      // sehingga lolos dari catch di bawah dan muncul sebagai unhandled error.
+      // Pola `?? const {}` mengikuti ai_insight_repository.dart.
+      return response.data ?? const <String, dynamic>{};
     } on DioException catch (error) {
       throw ApiException.fromDio(error);
     }
