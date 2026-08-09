@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/utils/formatters.dart';
+import '../../../../core/utils/idr_input_formatter.dart';
 import '../../../transactions/domain/entities/category.dart';
 import '../../../transactions/domain/entities/transaction.dart';
 import '../../../transactions/transactions_di.dart';
@@ -62,7 +63,7 @@ class _InstallmentFormState extends ConsumerState<InstallmentForm> {
           .create(
             categoryId: _selectedCategory!.id,
             title: _titleController.text.trim(),
-            monthlyAmount: double.parse(_amountController.text),
+            monthlyAmount: parseIdrInput(_amountController.text),
             tenorMonths: int.parse(_tenorController.text),
             startDate:
                 '${_startDate.year}-${_startDate.month.toString().padLeft(2, '0')}-${_startDate.day.toString().padLeft(2, '0')}',
@@ -98,7 +99,7 @@ class _InstallmentFormState extends ConsumerState<InstallmentForm> {
         .where((c) => c.type == TransactionType.expense)
         .toList();
 
-    final monthlyAmount = double.tryParse(_amountController.text) ?? 0;
+    final monthlyAmount = parseIdrInput(_amountController.text);
     final tenor = int.tryParse(_tenorController.text) ?? 0;
     final total = monthlyAmount * tenor;
 
@@ -169,10 +170,11 @@ class _InstallmentFormState extends ConsumerState<InstallmentForm> {
                   prefixText: 'Rp ',
                 ),
                 keyboardType: TextInputType.number,
+                inputFormatters: const [IdrInputFormatter()],
                 validator: (v) {
                   if (v == null || v.isEmpty) return 'Wajib diisi';
-                  if (double.tryParse(v) == null || double.parse(v) <= 0) {
-                    return 'Jumlah tidak valid';
+                  if (parseIdrInput(v) <= 0) {
+                    return 'Jumlah harus lebih besar dari 0';
                   }
                   return null;
                 },
