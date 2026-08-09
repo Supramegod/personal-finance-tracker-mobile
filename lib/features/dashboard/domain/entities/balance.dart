@@ -34,15 +34,24 @@ class Balance {
 /// total pemasukan & pengeluaran periode berjalan (dari /summary/report).
 /// Backend memisah dua endpoint, jadi model ini menggabungkannya.
 class DashboardSummary {
+  /// Saldo kas — SUDAH dikurangi setoran tabungan.
   final double balance;
   final double totalIncome;
   final double totalExpense;
+
+  /// Total di seluruh pot tabungan kelompok.
+  final double savingsTotal;
 
   const DashboardSummary({
     required this.balance,
     required this.totalIncome,
     required this.totalExpense,
+    this.savingsTotal = 0,
   });
+
+  /// Kas + tabungan. Menabung memindahkan uang, tidak menghilangkannya —
+  /// tanpa angka ini saldo terlihat menyusut setiap kali user menyetor.
+  double get netWorth => balance + savingsTotal;
 
   static const empty = DashboardSummary(
     balance: 0,

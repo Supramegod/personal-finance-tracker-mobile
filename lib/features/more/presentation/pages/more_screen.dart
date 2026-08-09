@@ -190,6 +190,13 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
             onTap: () => context.push('/installments'),
           ),
           _MoreItem(
+            icon: Icons.savings_outlined,
+            color: AppColors.primary,
+            title: 'Tabungan',
+            subtitle: 'Sisihkan uang untuk tujuan tertentu',
+            onTap: () => context.push('/savings'),
+          ),
+          _MoreItem(
             icon: Icons.calendar_month_outlined,
             color: AppColors.info,
             title: 'Kalender',
