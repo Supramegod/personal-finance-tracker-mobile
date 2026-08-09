@@ -48,3 +48,6 @@ app.*.map.json
 /local.properties
 /android/local.properties
 /android/app/local.properties
+
+# Local agent tooling — not shared.
+/.claude/
