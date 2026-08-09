@@ -1,4 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Aplikasi ini murni klien API — tanpa izin ini build release sama sekali
+         tidak bisa membuka koneksi, dan setiap request gagal dengan "tidak dapat
+         terhubung ke server". Template Flutter hanya menaruhnya di manifest
+         debug/ dan profile/, sehingga masalahnya tidak pernah muncul saat
+         `flutter run` dan baru terlihat setelah APK release dipasang. -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="personaltracker"
         android:name="${applicationName}"
