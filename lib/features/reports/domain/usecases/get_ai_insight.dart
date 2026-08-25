@@ -6,6 +6,7 @@ class GetAIInsight {
   final AIInsightRepositoryContract repository;
   Future<FinancialInsight> month(String value) => repository.getMonth(value);
   Future<FinancialInsight> latest() => repository.getLatest();
+  Future<void> regenerate(String value) => repository.regenerate(value);
 }
 
 class ManageAIConsent {

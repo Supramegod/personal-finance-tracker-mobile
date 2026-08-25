@@ -16,6 +16,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/utils/formatters.dart';
 import '../../../../core/utils/validators.dart';
+import '../../../../core/utils/idr_input_formatter.dart';
 import '../../../../shared/widgets/loading_overlay.dart';
 import '../../data/repositories/transaction_repository.dart';
 import '../../domain/entities/category.dart';
@@ -53,7 +54,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
     if (_isEditMode) {
       final t = widget.transaction!;
       _selectedType = t.type;
-      _amountController.text = t.amount.toStringAsFixed(0);
+      _amountController.text = formatIdrInput(t.amount.toStringAsFixed(0));
       _selectedDate = t.transactionDate;
       _noteController.text = t.note ?? '';
     }
@@ -105,7 +106,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
     final tx = Transaction(
       id: widget.transaction?.id ?? '',
       type: _selectedType,
-      amount: double.parse(_amountController.text.replaceAll('.', '').trim()),
+      amount: parseIdrInput(_amountController.text),
       categoryId: _selectedCategory!.id,
       categoryName: _selectedCategory!.name,
       transactionDate: _selectedDate,
@@ -200,6 +201,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
                 TextFormField(
                   controller: _amountController,
                   keyboardType: TextInputType.number,
+                  inputFormatters: const [IdrInputFormatter()],
                   autofocus: !_isEditMode,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.w800,

@@ -20,6 +20,7 @@ import '../../features/groups/presentation/pages/members_page.dart';
 import '../../features/installments/presentation/pages/installment_page.dart';
 import '../../features/more/presentation/pages/more_screen.dart';
 import '../../features/reports/presentation/pages/reports_page.dart';
+import '../../features/savings/presentation/pages/savings_page.dart';
 import '../../features/settings/presentation/pages/settings_screen.dart';
 import '../../features/transactions/domain/entities/transaction.dart';
 import '../../features/transactions/presentation/pages/add_transaction_screen.dart';
@@ -90,6 +91,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/installments',
         builder: (_, _) => const InstallmentPage(),
       ),
+      GoRoute(path: '/savings', builder: (_, _) => const SavingsPage()),
       GoRoute(path: '/calendar', builder: (_, _) => const CalendarScreen()),
       GoRoute(path: '/members', builder: (_, _) => const MembersPage()),
       GoRoute(path: '/settings', builder: (_, _) => const SettingsScreen()),

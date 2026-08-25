@@ -50,6 +50,14 @@ abstract final class ApiEndpoints {
   static String installment(String id) => '/installments/$id'; // DELETE
   static String installmentPay(String id) => '/installments/$id/pay'; // POST
 
+  // ── Savings / Tabungan ───────────────────────────────────────────
+  static const String savings = '/savings'; // GET / POST
+  static String savingsDetail(String id) => '/savings/$id'; // GET/PUT/DELETE
+  static String savingsDeposit(String id) => '/savings/$id/deposit'; // POST
+  static String savingsWithdraw(String id) => '/savings/$id/withdraw'; // POST
+  static String savingsEntry(String id, String entryId) =>
+      '/savings/$id/entries/$entryId'; // DELETE
+
   // ── Categories ───────────────────────────────────────────────────
   static const String categories = '/categories'; // GET
 
@@ -58,4 +66,6 @@ abstract final class ApiEndpoints {
   static const String report = '/summary/report'; // GET (?period=&from=&to=)
   static const String aiInsights = '/summary/ai-insights';
   static const String latestAIInsight = '/summary/ai-insights/latest';
+  static const String regenerateAIInsight =
+      '/summary/ai-insights/regenerate'; // POST (?month=YYYY-MM), owner-only
 }

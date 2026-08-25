@@ -7,6 +7,7 @@ import '../../features/groups/groups_di.dart';
 import '../../features/installments/installments_di.dart';
 import '../../features/more/more_di.dart';
 import '../../features/reports/reports_di.dart';
+import '../../features/savings/savings_di.dart';
 import '../../features/settings/settings_di.dart';
 import '../../features/transactions/transactions_di.dart';
 
@@ -20,6 +21,7 @@ List<Override> buildDependencyOverrides() => [
   ...registerInstallmentsDependencies(),
   ...registerMoreDependencies(),
   ...registerReportsDependencies(),
+  ...registerSavingsDependencies(),
   ...registerSettingsDependencies(),
   ...registerTransactionsDependencies(),
 ];

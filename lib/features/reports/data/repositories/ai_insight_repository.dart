@@ -71,6 +71,24 @@ class AIInsightRepository implements AIInsightRepositoryContract {
     }
   }
 
+  /// Meminta backend membuat ulang analisis satu bulan.
+  ///
+  /// Backend membalas 202 dan bekerja di latar, jadi tidak ada isi yang perlu
+  /// dibaca. Penolakan yang wajar terjadi — 403 bukan owner, 409 sedang
+  /// berjalan, 429 terlalu cepat — sudah membawa pesan siap tampil di body,
+  /// dan ApiException.fromDio yang mengambilnya.
+  @override
+  Future<void> regenerate(String month) async {
+    try {
+      await _dio.post<Map<String, dynamic>>(
+        ApiEndpoints.regenerateAIInsight,
+        queryParameters: {'month': month},
+      );
+    } on DioException catch (error) {
+      throw ApiException.fromDio(error);
+    }
+  }
+
   Future<String> _requiredGroupId() async {
     final id = await _storage.activeGroupId;
     if (id == null || id.isEmpty)

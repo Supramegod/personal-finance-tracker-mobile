@@ -8,6 +8,8 @@
 /// Untuk dashboard, keduanya digabung jadi satu DashboardSummary.
 library; // Dashboard summary repository.
 
+import 'dart:developer' as developer;
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -47,9 +49,11 @@ class SummaryRepository implements SummaryRepositoryContract {
         balance: num2d(balanceData['balance']),
         totalIncome: num2d(reportData['total_income']),
         totalExpense: num2d(reportData['total_expense']),
+        // Default 0 supaya tetap jalan bila backend belum diperbarui.
+        savingsTotal: num2d(balanceData['savings_total']),
       );
     } on DioException catch (e) {
-      print('error $e');
+      developer.log('Gagal memuat ringkasan dashboard', error: e);
       throw ApiException.fromDio(e);
     }
   }
