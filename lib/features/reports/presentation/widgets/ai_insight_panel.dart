@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/api/api_exception.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/utils/formatters.dart';
@@ -64,15 +65,43 @@ class AIInsightPanel extends ConsumerWidget {
             _MonthNavigator(month: month!, onChanged: onMonthChanged),
             const SizedBox(height: AppSpacing.sm),
             content,
-            if (value.canManage)
+            if (value.canManage) ...[
+              TextButton.icon(
+                onPressed: () => _regenerate(context, ref),
+                icon: const Icon(Icons.refresh_rounded, size: 18),
+                label: const Text('Buat ulang analisis'),
+              ),
               TextButton(
                 onPressed: () => _disable(context, ref),
                 child: const Text('Nonaktifkan Insight AI'),
               ),
+            ],
           ],
         );
       },
     );
+  }
+
+  /// Meminta analisis bulan ini dibuat ulang.
+  ///
+  /// Tidak ada penahan ganda-klik di sisi widget: penahannya ada di server
+  /// (409 bila sedang berjalan, 429 bila terlalu cepat) karena di situlah
+  /// kuota Gemini sesungguhnya terbakar. Pesan penolakannya sudah siap
+  /// tampil, jadi cukup diteruskan ke SnackBar.
+  Future<void> _regenerate(BuildContext context, WidgetRef ref) async {
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      await regenerateAIInsight(ref, monthKey);
+      messenger.showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Analisis sedang dibuat ulang. Tarik untuk menyegarkan sebentar lagi.',
+          ),
+        ),
+      );
+    } on ApiException catch (error) {
+      messenger.showSnackBar(SnackBar(content: Text(error.message)));
+    }
   }
 
   Future<void> _disable(BuildContext context, WidgetRef ref) async {

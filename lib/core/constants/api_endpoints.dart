@@ -66,4 +66,6 @@ abstract final class ApiEndpoints {
   static const String report = '/summary/report'; // GET (?period=&from=&to=)
   static const String aiInsights = '/summary/ai-insights';
   static const String latestAIInsight = '/summary/ai-insights/latest';
+  static const String regenerateAIInsight =
+      '/summary/ai-insights/regenerate'; // POST (?month=YYYY-MM), owner-only
 }

@@ -5,4 +5,5 @@ abstract interface class AIInsightRepositoryContract {
   Future<FinancialInsight> getLatest();
   Future<AIConsent> getConsent();
   Future<AIConsent> setConsent(bool enabled);
+  Future<void> regenerate(String month);
 }
